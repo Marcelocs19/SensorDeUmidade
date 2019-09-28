@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tipos")
@@ -16,6 +17,7 @@ public class Tipo extends EntidadeBase{
 
 	private static final long serialVersionUID = 1L;
 
+	@NotBlank(message = "O campo nome é obrigatório.")
 	@Column(name = "NOME")
 	private String nome;
 	
@@ -31,17 +33,18 @@ public class Tipo extends EntidadeBase{
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tipo")
 	private Set<Planta> plantas;
-	
-		
+			
 	public Tipo() {
 		super();
 	}
-
-	public Tipo(String nome, int umidade_minima, int umidade_maxima) {
+	
+	public Tipo(@NotBlank(message = "O campo nome é obrigatório.") String nome, @Min(0) @Max(100) int umidade_minima,
+			@Min(0) @Max(100) int umidade_maxima, Set<Planta> plantas) {
 		super();
 		this.nome = nome;
 		this.umidade_minima = umidade_minima;
 		this.umidade_maxima = umidade_maxima;
+		this.plantas = plantas;
 	}
 
 	public String getNome() {
