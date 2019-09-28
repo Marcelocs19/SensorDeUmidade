@@ -1,6 +1,7 @@
 package br.com.pucrs.sensorumidade.servico;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.validation.BindingResult;
 
@@ -14,6 +15,8 @@ public class UsuarioServico {
 	 */
 	private static final String ERRO_SALVAR_USUARIO = "Erro ao salvar o usuario.";
 	private static final String ERRO_BUSCAR_USUARIO = "Erro ao buscar o(s) usuario(s).";
+	private static final String ERRO_EDITAR_USUARIO = "Erro usuario não encontrado.";
+	private static final String ERRO_BUSCAR_ID = "Erro ao buscar o usuario pelo id.";
 
 	/**
 	 * Mensagens de erro para o model
@@ -35,7 +38,6 @@ public class UsuarioServico {
 		} catch (Exception excecao) {
 			throw new ServicoExcecao(ERRO_BUSCAR_USUARIO, excecao);
 		}
-
 	}
 
 	public void salvar(Usuario usuario) {
@@ -57,6 +59,22 @@ public class UsuarioServico {
 		} catch (Exception excecao) {
 			throw new ServicoExcecao(ERRO_SALVAR_USUARIO, excecao);
 		}
+	}
+	
+	public Usuario buscarPorId(Long id) {
+		try {
+			Optional<Usuario> usuario = usuarioRepositorio.findById(id);
+			if (usuario.isPresent()) {
+				return usuario.get();
+			} else {
+				throw new ServicoExcecao(ERRO_EDITAR_USUARIO);
+			}
+		} catch (IllegalArgumentException excecao) {
+			throw new ServicoExcecao(ERRO_BUSCAR_ID, excecao);
+		} catch (Exception excecao) {
+			throw new ServicoExcecao(ERRO_BUSCAR_ID);
+		}
+
 	}
 
 }
