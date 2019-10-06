@@ -1,5 +1,5 @@
 package br.com.pucrs.sensorumidade.repositorio;
 
-public class LeitorRepositorio {
+public interface LeitorRepositorio {
 
 }

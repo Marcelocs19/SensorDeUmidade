@@ -2,6 +2,7 @@ package br.com.pucrs.sensorumidade.controlador;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -27,9 +28,9 @@ public class UsuarioControlador {
 	private static final String REDIRECIONAR_NOVO_USUARIO = "redirect:/usuarios/novo";
 	private static final String REDIRECIONAR_EDITAR_USUARIO = "redirect:/usuarios/{id}/editar";
 	private static final String REDIRECIONAR_USUARIO = "redirect:/usuarios";
-	private static final String VISUALIZAR_LISTAR_USUARIO = "usuarios/listarUsuario";
+	private static final String VISUALIZAR_BUSCAR_USUARIO = "usuarios/buscarUsuario";
 	private static final String VISUALIZAR_NOVO_USUARIO = "usuarios/novoUsuario";
-	private static final String VISUALIZAR_EDITAR_USUARIO = "usuarios/editarUsuario";	
+	private static final String VISUALIZAR_EDITAR_USUARIO = "usuarios/editarUsuario";
 	private static final String VISUALIZAR_DETALHAR_USUARIO = "usuarios/usuarioDetalhar";
 	private static final String DETALHAR_USUARIO = "/{id}/detalhar";
 	private static final String EDITAR_USUARIO = "/{id}/editar";
@@ -41,6 +42,7 @@ public class UsuarioControlador {
 	 */
 	private static final String MENSAGEM = "mensagem";
 	private static final String MODELO_USUARIO = "usuarios";
+
 	/**
 	 * Mensagens de sucesso
 	 */
@@ -51,8 +53,8 @@ public class UsuarioControlador {
 	 * Mensagens de erro
 	 */
 	private static final String ERRO_SALVAR_USUARIO = "Erro ao salvar o usuario.";
-	private static final String ERRO_LISTAR_PERFIL = "Erro ao listar o(s) usuario(s).";
-	private static final String ERRO_EDITAR_PERFIL = "Erro ao editar o usuario.";
+	private static final String ERRO_BUSCAR_USUARIO = "Erro ao buscar o(s) usuario(s).";
+	private static final String ERRO_EDITAR_USUARIO = "Erro ao editar o usuario.";
 
 	/**
 	 * Mensagens de erro para o model
@@ -67,18 +69,15 @@ public class UsuarioControlador {
 	}
 
 	@GetMapping
-	public ModelAndView buscarTodosUsuarios(Usuario usuario, RedirectAttributes atribRedirecionamento) {
+	public ModelAndView buscarTodosUsuarios(RedirectAttributes atribRedirecionamento) {
 		try {
-			ModelAndView modelo = new ModelAndView(VISUALIZAR_LISTAR_USUARIO);
-			List<Usuario> listaUsuario = usuarioServico.listarUsuario(usuario);
-			if (!listaUsuario.isEmpty()) {
-				modelo.addObject(MODELO_USUARIO, listaUsuario);
-				atribRedirecionamento.addFlashAttribute(MENSAGEM, ERRO_LISTAR_PERFIL);
-			}
+			ModelAndView modelo = new ModelAndView(VISUALIZAR_BUSCAR_USUARIO);
+			List<Usuario> listarUsuarios = usuarioServico.listarUsuarios();
+			modelo.addObject(MODELO_USUARIO, listarUsuarios);
 			return modelo;
 		} catch (Exception excecao) {
-			atribRedirecionamento.addFlashAttribute(ERRO_MENSAGEM_USUARIO, ERRO_LISTAR_PERFIL);
-			return new ModelAndView(VISUALIZAR_LISTAR_USUARIO);
+			atribRedirecionamento.addFlashAttribute(ERRO_MENSAGEM_USUARIO, ERRO_BUSCAR_USUARIO);
+			return new ModelAndView(VISUALIZAR_BUSCAR_USUARIO);
 		}
 	}
 
@@ -89,14 +88,15 @@ public class UsuarioControlador {
 			modelo.addObject(MODELO_USUARIO, usuario);
 			return modelo;
 		} catch (Exception excecao) {
-			ModelAndView modelo = new ModelAndView(VISUALIZAR_NOVO_USUARIO);
-			modelo.addObject(MODELO_USUARIO, usuario);
-			return modelo;
+			ModelAndView erro = new ModelAndView(VISUALIZAR_NOVO_USUARIO);
+			erro.addObject(MODELO_USUARIO, usuario);
+			return erro;
 		}
 
 	}
 
 	@PostMapping(NOVO_USUARIO)
+	@Transactional
 	public ModelAndView criarNovoUsuario(@Valid Usuario usuario, BindingResult resultado,
 			RedirectAttributes atribRedirecionamento) {
 		try {
@@ -109,13 +109,12 @@ public class UsuarioControlador {
 				return modelo;
 			}
 		} catch (Exception excecao) {
-			ModelAndView erroExcecao = new ModelAndView(REDIRECIONAR_NOVO_USUARIO);
+			ModelAndView erro = new ModelAndView(REDIRECIONAR_NOVO_USUARIO);
 			atribRedirecionamento.addFlashAttribute(ERRO_MENSAGEM_USUARIO, ERRO_SALVAR_USUARIO);
-			return erroExcecao;
-
+			return erro;
 		}
 	}
-	
+
 	@GetMapping(EDITAR_USUARIO)
 	public ModelAndView visualizarEditarUsuario(@PathVariable Long id) {
 		try {
@@ -124,39 +123,45 @@ public class UsuarioControlador {
 			modelo.addObject(USUARIO, usuario);
 			return modelo;
 		} catch (TemplateInputException excecaoTemplate) {
-			return new ModelAndView(VISUALIZAR_LISTAR_USUARIO);
+			return new ModelAndView(VISUALIZAR_BUSCAR_USUARIO);
 		} catch (Exception excecao) {
 			return new ModelAndView(REDIRECIONAR_USUARIO);
 		}
 	}
-		
+
 	@PostMapping(EDITAR_USUARIO)
-	public ModelAndView editarPerfil(@Valid Usuario usuario, BindingResult resultado, RedirectAttributes atribRedirecionamento) {
+	public ModelAndView editarPerfil(@Valid Usuario usuario, BindingResult resultado,
+			RedirectAttributes atribRedirecionamento) {
 		try {
 			if (!usuarioServico.validarSalvar(usuario, resultado)) {
 				ModelAndView teste = new ModelAndView(VISUALIZAR_EDITAR_USUARIO);
 				teste.addObject(usuario);
 				return teste;
-			}else {				
+			} else {
 				ModelAndView modelo = new ModelAndView(REDIRECIONAR_EDITAR_USUARIO);
 				atribRedirecionamento.addFlashAttribute(MENSAGEM, EDITAR_MENSAGEM_SUCESSO);
 				usuarioServico.salvar(usuario);
 				return modelo;
 			}
 		} catch (Exception excecao) {
-			ModelAndView erroExcecao = new ModelAndView(REDIRECIONAR_EDITAR_USUARIO);
-			erroExcecao.addObject(MODELO_USUARIO, usuario);
-			atribRedirecionamento.addFlashAttribute(ERRO_MENSAGEM_USUARIO, ERRO_EDITAR_PERFIL);
-			return erroExcecao;
+			ModelAndView erro = new ModelAndView(REDIRECIONAR_EDITAR_USUARIO);
+			erro.addObject(MODELO_USUARIO, usuario);
+			atribRedirecionamento.addFlashAttribute(ERRO_MENSAGEM_USUARIO, ERRO_EDITAR_USUARIO);
+			return erro;
 		}
 	}
-	
-    @GetMapping(DETALHAR_USUARIO)
-    public ModelAndView showOwner(@PathVariable("id") Long id) {
-        ModelAndView mav = new ModelAndView(VISUALIZAR_DETALHAR_USUARIO);
-        mav.addObject(this.usuarioServico.buscarPorId(id));
-        return mav;
-    }
 
+	@GetMapping(DETALHAR_USUARIO)
+	public ModelAndView detalharUsuario(@PathVariable("id") Long id) {
+		try {
+			ModelAndView mav = new ModelAndView(VISUALIZAR_DETALHAR_USUARIO);
+			mav.addObject(this.usuarioServico.buscarPorId(id));
+			return mav;
+		} catch (TemplateInputException excecaoTemplate) {
+			return new ModelAndView(VISUALIZAR_BUSCAR_USUARIO);
+		}catch (Exception excecao) {
+			return new ModelAndView(REDIRECIONAR_USUARIO);
+		}
+	}
 
 }
