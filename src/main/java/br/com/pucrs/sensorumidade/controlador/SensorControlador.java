@@ -28,7 +28,7 @@ public class SensorControlador {
 	private static final String REDIRECIONAR_NOVO_SENSOR = "redirect:/sensores/novo";
 	private static final String REDIRECIONAR_SENSOR = "redirect:/sensores";
 	private static final String VISUALIZAR_NOVO_SENSOR = "sensores/novoSensor";
-	private static final String VISUALIZAR_BUSCAR_SENSOR = "sensores/buscarSensor";
+	private static final String VISUALIZAR_BUSCAR_SENSOR = "sensores/listarSensor";
 	private static final String VISUALIZAR_DETALHAR_SENSOR = "sensores/sensorDetalhar";
 	private static final String DETALHAR_SENSOR = "/{id}/detalhar";
 	private static final String NOVO_SENSOR = "/novo";

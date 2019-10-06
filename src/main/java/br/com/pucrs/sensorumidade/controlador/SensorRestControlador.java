@@ -22,7 +22,7 @@ import br.com.pucrs.sensorumidade.servico.SensorServico;
 
 @RestController
 @RequestMapping("/servico")
-public class SendorRestControlador {
+public class SensorRestControlador {
 
 	/**
 	 * Mensagens para o email

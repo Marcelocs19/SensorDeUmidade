@@ -20,7 +20,7 @@ public class PlantaControlador {
 	/**
 	 * Mapeamentos e Views
 	 */
-	private static final String VISUALIZAR_BUSCAR_PLANTA = "plantas/buscarPlanta";
+	private static final String VISUALIZAR_BUSCAR_PLANTA = "plantas/listarPlanta";
 	private static final String VISUALIZAR_DETALHAR_PLANTA = "plantas/detalharPlanta";
 	private static final String REDIRECIONAR_PLANTA = "redirect:/plantas";
 	private static final String DETALHAR_PLANTA = "/{id}/detalhar";
@@ -59,7 +59,7 @@ public class PlantaControlador {
 	}
 
 	@GetMapping(DETALHAR_PLANTA)
-	public ModelAndView detalhePlanta(@PathVariable("id") Long id) {
+	public ModelAndView detalharPlanta(@PathVariable("id") Long id) {
 		try {
 			ModelAndView modelo = new ModelAndView(VISUALIZAR_DETALHAR_PLANTA);
 			Planta planta = plantaServico.buscarPorId(id);

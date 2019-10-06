@@ -28,7 +28,7 @@ public class UsuarioControlador {
 	private static final String REDIRECIONAR_NOVO_USUARIO = "redirect:/usuarios/novo";
 	private static final String REDIRECIONAR_EDITAR_USUARIO = "redirect:/usuarios/{id}/editar";
 	private static final String REDIRECIONAR_USUARIO = "redirect:/usuarios";
-	private static final String VISUALIZAR_BUSCAR_USUARIO = "usuarios/buscarUsuario";
+	private static final String VISUALIZAR_BUSCAR_USUARIO = "usuarios/listarUsuario";
 	private static final String VISUALIZAR_NOVO_USUARIO = "usuarios/novoUsuario";
 	private static final String VISUALIZAR_EDITAR_USUARIO = "usuarios/editarUsuario";
 	private static final String VISUALIZAR_DETALHAR_USUARIO = "usuarios/usuarioDetalhar";
