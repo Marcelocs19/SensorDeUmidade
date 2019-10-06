@@ -63,7 +63,7 @@ public class SensorControlador {
 	}
 
 	@GetMapping
-	public ModelAndView buscarTodosSensores(RedirectAttributes atribRedirecionamento) {
+	public ModelAndView buscarTodosSensores(Sensor sensor, RedirectAttributes atribRedirecionamento) {
 		try {
 			ModelAndView modelo = new ModelAndView(VISUALIZAR_BUSCAR_SENSOR);
 			List<Sensor> listarSensores = sensorServico.listarSensores();

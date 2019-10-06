@@ -69,7 +69,7 @@ public class UsuarioControlador {
 	}
 
 	@GetMapping
-	public ModelAndView buscarTodosUsuarios(RedirectAttributes atribRedirecionamento) {
+	public ModelAndView buscarTodosUsuarios(Usuario usuario,RedirectAttributes atribRedirecionamento) {
 		try {
 			ModelAndView modelo = new ModelAndView(VISUALIZAR_BUSCAR_USUARIO);
 			List<Usuario> listarUsuarios = usuarioServico.listarUsuarios();
@@ -154,9 +154,9 @@ public class UsuarioControlador {
 	@GetMapping(DETALHAR_USUARIO)
 	public ModelAndView detalharUsuario(@PathVariable("id") Long id) {
 		try {
-			ModelAndView mav = new ModelAndView(VISUALIZAR_DETALHAR_USUARIO);
-			mav.addObject(this.usuarioServico.buscarPorId(id));
-			return mav;
+			ModelAndView modelo = new ModelAndView(VISUALIZAR_DETALHAR_USUARIO);
+			modelo.addObject(this.usuarioServico.buscarPorId(id));
+			return modelo;
 		} catch (TemplateInputException excecaoTemplate) {
 			return new ModelAndView(VISUALIZAR_BUSCAR_USUARIO);
 		}catch (Exception excecao) {

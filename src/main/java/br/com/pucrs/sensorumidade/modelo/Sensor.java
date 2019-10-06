@@ -40,7 +40,7 @@ public class Sensor extends EntidadeBase{
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sensores")
-	private Set<Leitor> leitor;
+	private Set<Leitura> leitor;
 		
 	public Sensor() {
 		super();
@@ -48,7 +48,7 @@ public class Sensor extends EntidadeBase{
 
 	public Sensor(@NotBlank(message = "O campo nome é obrigatório.") String nome,
 			@NotBlank(message = "O campo mensagem é obrigatório.") String mensagem, Planta planta, Usuario usuario,
-			Set<Leitor> leitor) {
+			Set<Leitura> leitor) {
 		super();
 		this.nome = nome;
 		this.mensagem = mensagem;
@@ -89,11 +89,11 @@ public class Sensor extends EntidadeBase{
 		this.usuario = usuario;
 	}
 
-	public Set<Leitor> getLeitor() {
+	public Set<Leitura> getLeitor() {
 		return leitor;
 	}
 
-	public void setLeitor(Set<Leitor> leitor) {
+	public void setLeitor(Set<Leitura> leitor) {
 		this.leitor = leitor;
 	}
 

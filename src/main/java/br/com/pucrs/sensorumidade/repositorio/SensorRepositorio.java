@@ -10,4 +10,5 @@ public interface SensorRepositorio extends JpaRepository<Sensor, Long>{
 
 	Optional<Sensor> findAllOrderByNomeAsc();	
 
+
 }

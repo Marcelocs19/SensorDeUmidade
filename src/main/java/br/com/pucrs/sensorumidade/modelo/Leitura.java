@@ -19,9 +19,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
-@Table(name = "leitores")
+@Table(name = "leituras")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Leitor extends EntidadeBase{
+public class Leitura extends EntidadeBase{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -38,18 +38,18 @@ public class Leitor extends EntidadeBase{
     
     @JsonProperty
 	@ManyToOne
-	@JoinColumn(name = "sensorId")
-	private Sensor sensorId;
+	@JoinColumn(name = "sensor")
+	private Sensor sensor;
 	  
-	public Leitor() {
+	public Leitura() {
 		super();
 	}
 
-	public Leitor(@Min(0) @Max(100) int umidadeAtual, LocalDateTime data, Sensor sensorId) {
+	public Leitura(@Min(0) @Max(100) int umidadeAtual, LocalDateTime data, Sensor sensor) {
 		super();
 		this.umidadeAtual = umidadeAtual;
 		this.data = data;
-		this.sensorId = sensorId;
+		this.sensor = sensor;
 	}
 
 	public String getData() {
@@ -72,12 +72,12 @@ public class Leitor extends EntidadeBase{
 		this.umidadeAtual = umidadeAtual;
 	}
 
-	public Sensor getSensorId() {
-		return sensorId;
+	public Sensor getSensor() {
+		return sensor;
 	}
 
-	public void setSensorId(Sensor sensorId) {
-		this.sensorId = sensorId;
+	public void setSensor(Sensor sensor) {
+		this.sensor = sensor;
 	}
 
 	public static long getSerialversionuid() {
@@ -90,7 +90,7 @@ public class Leitor extends EntidadeBase{
 
 	@Override
 	public String toString() {
-		return "Leitor [umidadeAtual=" + umidadeAtual + ", data=" + data + ", sensorId=" + sensorId + ", isNew()="
+		return "Leitura [umidadeAtual=" + umidadeAtual + ", data=" + data + ", sensor=" + sensor + ", isNew()="
 				+ isNew() + "]";
 	}
 		    
