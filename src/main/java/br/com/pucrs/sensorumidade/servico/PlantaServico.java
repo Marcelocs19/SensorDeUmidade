@@ -31,7 +31,7 @@ public class PlantaServico {
 	public List<Planta> listarPlantas() {
 		try {
 			Optional<Planta> listarPlanta;
-			listarPlanta = plantaRepositorio.findAllOrderByNomeAsc();
+			listarPlanta = plantaRepositorio.findAllByOrderByNomeAsc();
 			if (listarPlanta.isPresent()) {
 				return Arrays.asList(listarPlanta.get());
 			} else {

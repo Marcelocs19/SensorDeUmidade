@@ -18,7 +18,7 @@ public class Planta extends EntidadeBase{
 	private static final long serialVersionUID = 1L;
 	
 	@NotBlank(message = "O campo nome é obrigatório.")
-	@Column(name = "NOME", nullable = false, length = 50)
+	@Column(name = "nome", nullable = false, length = 50)
 	private String nome;
 	
 	@ManyToOne(cascade = CascadeType.ALL)

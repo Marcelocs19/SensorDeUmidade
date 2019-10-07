@@ -8,6 +8,6 @@ import br.com.pucrs.sensorumidade.modelo.Planta;
 
 public interface PlantaRepositorio extends JpaRepository<Planta, Long>{
 
-	Optional<Planta> findAllOrderByNomeAsc();
+	Optional<Planta> findAllByOrderByNomeAsc();
 	
 }

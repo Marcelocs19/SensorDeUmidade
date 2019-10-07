@@ -33,7 +33,7 @@ public class UsuarioServico {
 	public List<Usuario> listarUsuarios() {
 		try {
 			Optional<Usuario> listaUsuario;
-			listaUsuario = usuarioRepositorio.findAllOrderByNomeAsc();
+			listaUsuario = usuarioRepositorio.findAllByOrderByNomeAsc();
 			if (listaUsuario.isPresent()) {
 				return Arrays.asList(listaUsuario.get());
 			} else {

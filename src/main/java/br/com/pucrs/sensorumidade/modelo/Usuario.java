@@ -9,6 +9,9 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -24,16 +27,20 @@ public class Usuario implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	private Long id;
+
 	
-	@NotBlank(message = "O campo nome é obrigatório.")
+	//@NotBlank(message = "O campo nome é obrigatório.")
 	@Column(name = "NOME", nullable = false, length = 50, unique = true) 
 	private String nome;
 	
-	@Email(message = "O campo e-mail não está corretamente preenchido.")
+	//@Email(message = "O campo e-mail não está corretamente preenchido.")
 	@Column(name = "EMAIL", nullable = false)	
 	private String email;
 	
-	@NotBlank(message = "O campo senha é obrigatório.")
+	//@NotBlank(message = "O campo senha é obrigatório.")
 	@Column(name = "SENHA", nullable = false)
 	private String senha;
 	
@@ -55,7 +62,23 @@ public class Usuario implements UserDetails {
 		this.email = email;
 		this.senha = senha;
 	}
-		
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<UsuarioPerfil> getUsuarioPerfis() {
+		return usuarioPerfis;
+	}
+
+	public void setUsuarioPerfis(List<UsuarioPerfil> usuarioPerfis) {
+		this.usuarioPerfis = usuarioPerfis;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -120,7 +143,7 @@ public class Usuario implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		return false;
+		return true;
 	}	
 
 }

@@ -27,7 +27,7 @@ public class Leitura extends EntidadeBase{
 	
 	@Min(0)
 	@Max(100)
-	@Column(name = "UMIDADEATUAL", nullable = false)
+	@Column(name = "umidadeAtual", nullable = false)
 	private int umidadeAtual;
 	
      

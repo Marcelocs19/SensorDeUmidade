@@ -8,7 +8,7 @@ import br.com.pucrs.sensorumidade.modelo.Sensor;
 
 public interface SensorRepositorio extends JpaRepository<Sensor, Long>{
 
-	Optional<Sensor> findAllOrderByNomeAsc();	
+	Optional<Sensor> findAllByOrderByNomeAsc();	
 
 
 }

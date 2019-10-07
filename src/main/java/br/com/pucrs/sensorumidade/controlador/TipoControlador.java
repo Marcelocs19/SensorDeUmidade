@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 
 import br.com.pucrs.sensorumidade.servico.TipoServico;
 
-@Controller
+//@Controller
 public class TipoControlador {
 	
 	private final TipoServico tipoServico;

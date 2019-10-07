@@ -21,11 +21,11 @@ public class Sensor extends EntidadeBase{
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message = "O campo nome é obrigatório.")
-	@Column(name = "NOME", nullable = false)
+	@Column(name = "nome", nullable = false)
 	private String nome;
 	
 	@NotBlank(message = "O campo mensagem é obrigatório.")
-	@Column(name = "MENSAGEM", nullable = false)
+	@Column(name = "mensagem", nullable = false)
 	private String mensagem;
 	
 	@JsonIgnore
@@ -39,7 +39,7 @@ public class Sensor extends EntidadeBase{
 	private Usuario usuario;
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sensores")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sensor")
 	private Set<Leitura> leitor;
 		
 	public Sensor() {

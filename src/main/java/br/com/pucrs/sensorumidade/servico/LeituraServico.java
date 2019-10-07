@@ -1,6 +1,5 @@
 package br.com.pucrs.sensorumidade.servico;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,10 +29,10 @@ public class LeituraServico {
 
 	public List<Leitura> listarLeituras() {
 		try {
-			Optional<Leitura> listaLeitura;
-			listaLeitura = leituraRepositorio.findAllOrderByNomeAsc();
-			if (listaLeitura.isPresent()) {
-				return Arrays.asList(listaLeitura.get());
+			List<Leitura> listaLeitura;
+			listaLeitura = leituraRepositorio.findAll();
+			if (!listaLeitura.isEmpty()) {
+				return listaLeitura;
 			} else {
 				throw new ServicoErro(ERRO_BUSCAR_LEITURA_NAO_ENCONTRADA);
 			}

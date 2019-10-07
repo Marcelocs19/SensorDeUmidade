@@ -32,7 +32,7 @@ public class SensorServico {
 	public List<Sensor> listarSensores() {
 		try {
 			Optional<Sensor> listaSensor;
-			listaSensor = sensorRepositorio.findAllOrderByNomeAsc();
+			listaSensor = sensorRepositorio.findAllByOrderByNomeAsc();
 			if (listaSensor.isPresent()) {
 				return Arrays.asList(listaSensor.get());
 			} else {
